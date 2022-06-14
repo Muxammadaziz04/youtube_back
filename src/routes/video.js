@@ -5,7 +5,7 @@ const checkToken = require('../middleware/checkToken')
 let router = express.Router()
 
 
-router.post('/videoUpload', checkToken, postVideo)
+router.post('/video', checkToken, postVideo)
 router.get('/videos', getVideo)
 router.get('/view/:fileName', view)
 router.get('/download/:fileName', download)
