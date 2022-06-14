@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const { InvalidRequestError } = require('../utils/errors.js')
 const { readFile, writeFile } = require('../utils/utils.js')
 
@@ -26,8 +27,8 @@ const postVideo = (req, res, next) => {
         let video = {
             user : user,
             file : {
-                view : `http://localhost:3000/view/${file.name}`,
-                download : `http://localhost:3000/download/${file.name}`
+                view : `https://clone-you-tube.herokuapp.com/view/${file.name}`,
+                download : `https://clone-you-tube.herokuapp.com/download/${file.name}`
             },
             title : req.body.title,
             date : Date.now(),
@@ -69,7 +70,20 @@ const getVideo = (req, res, next) => {
     }
 }
 
+
+const view = (req, res) => {
+    let { fileName } = req.params
+    res.sendFile(path.join(__dirname, '../', 'uploads', 'files', fileName))
+}
+
+const download = (req, res) => {
+    let { fileName } = req.params
+    res.download(path.join(__dirname, '../', 'uploads', 'files', fileName))
+}
+
 module.exports = {
     getVideo,
-    postVideo
+    postVideo,
+    view,
+    download
 }

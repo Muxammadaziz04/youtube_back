@@ -1,7 +1,6 @@
 const sha256 = require('sha256')
 const jwt = require('jsonwebtoken')
 const path = require('path')
-const fs = require('fs')
 const { readFile, writeFile } = require('../utils/utils.js')
 
 const secretKey = 'secret'
@@ -16,9 +15,9 @@ const Register = (req, res) => {
     if(file){
         let fileName = Date.now() + file.img.name.replace(/\s/g, "")
         file.img.mv(path.join(__dirname, '../', 'uploads', 'ava', fileName))
-        body.avatar = `http://localhost:3000/ava/${fileName}`
+        body.avatar = `https://clone-you-tube.herokuapp.com/ava/${fileName}`
     } else {
-        body.avatar = "http://localhost:3000/ava/simple.jpg"
+        body.avatar = "https://clone-you-tube.herokuapp.com/ava/simple.jpg"
     }
     
     body.userId = users.length ? +users.at(-1).userId + 1 : 1
@@ -68,9 +67,15 @@ const Login = (req, res, next) => {
 
 }
 
+const Get = (req, res) => {
+    let users = readFile('users')
+    res.status(200).send(users)
+}
+
 
 
 module.exports = {
     Register,
-    Login
+    Login,
+    Get
 }
