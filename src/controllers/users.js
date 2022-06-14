@@ -69,7 +69,7 @@ const Login = (req, res, next) => {
 
 const Get = (req, res) => {
     let users = readFile('users')
-    res.status(200).send(users)
+    res.status(200).send(users.filter(user => delete user.password))
 }
 
 

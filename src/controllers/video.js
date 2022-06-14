@@ -54,7 +54,7 @@ const postVideo = (req, res, next) => {
 const getVideo = (req, res, next) => {
     try {
         let videos = readFile('videos')
-        let users = readFile('users')
+        let users = readFile('users')        
 
         let { userId, search } = req.query
 
@@ -68,6 +68,17 @@ const getVideo = (req, res, next) => {
     } catch (error) {
         return next(new InvalidRequestError(500, error.message))
     }
+}
+
+const getUserVideos = (req, res) => {
+    let videos = readFile('videos')
+    let { userId } = req.params
+
+    if(!userId) return
+
+    let data = videos.filter(video => video.user.userId == userId)
+
+    res.status(200).send(data)
 }
 
 
@@ -84,6 +95,7 @@ const download = (req, res) => {
 module.exports = {
     getVideo,
     postVideo,
+    getUserVideos,
     view,
     download
 }
