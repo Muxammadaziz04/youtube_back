@@ -11,6 +11,7 @@ const postVideo = (req, res, next) => {
         let file = req.files.file
 
         if(!file) throw new InvalidRequestError(400, 'file not found')
+        if(file.size > 1024 * 1024 * 50) throw new InvalidRequestError(400, 'fayl 50mb dan kop bolishi kerak emas')
 
         let videos = readFile('videos')
         let users = readFile('users')
