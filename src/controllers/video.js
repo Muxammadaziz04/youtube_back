@@ -76,7 +76,7 @@ const getUserVideos = (req, res) => {
 
     if(!userId) return
 
-    let data = videos.filter(video => video.user.userId == userId)
+    let data = videos.filter(video => video.user.userId == userId) || []
 
     res.status(200).send(data)
 }
